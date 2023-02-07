@@ -1,0 +1,10 @@
+# directories
+**/cache
+**/out
+
+# files
+*.env
+.DS_Store
+
+# broadcasts
+/broadcast/*
