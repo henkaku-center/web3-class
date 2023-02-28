@@ -32,12 +32,13 @@ contract Registry is IRegistry {
     /// @param members Array of addresses of the members of cohort to add.
     function addCohort(address[] memory members) external {
         require(msg.sender == owner, "Only the owner can add a cohort.");
+        uint256 cohort = currentCohort;
         for (uint256 i = 0; i < members.length; i++) {
-            whitelist[currentCohort][members[i]] = true;
+            whitelist[cohort][members[i]] = true;
         }
         currentCohort++;
 
-        emit CohortAdded(currentCohort, members);
+        emit CohortAdded(cohort, members);
     }
 
     /// @notice This function is used to check if an address is whitelisted.
