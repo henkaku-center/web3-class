@@ -13,7 +13,7 @@ abstract contract Ownable {
     event OwnershipChangeAccepted(address indexed previousOwner, address indexed newOwner);
 
     modifier onlyOwner() {
-        if (msg.sender != owner) revert OnlyOwner();
+        _checkOwner();
         _;
     }
 
@@ -35,6 +35,10 @@ abstract contract Ownable {
         emit OwnershipChangeAccepted(owner, newOwner);
         newOwner = address(0);
         _setOwner(newOwner);
+    }
+
+    function _checkOwner() internal view {
+        if (msg.sender != owner) revert OnlyOwner();
     }
 
     function _setOwner(address _newOwner) internal {
