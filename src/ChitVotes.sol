@@ -3,11 +3,10 @@
 pragma solidity ^0.8.9;
 
 import "openzeppelin-contracts/token/ERC20/ERC20.sol";
-import "openzeppelin-contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 import "openzeppelin-contracts/token/ERC20/extensions/ERC20Votes.sol";
 import "openzeppelin-contracts/token/ERC20/extensions/ERC20Wrapper.sol";
 
-contract ChitWrappedVotes is ERC20, ERC20Permit, ERC20Votes, ERC20Wrapper {
+contract ChitWrappedVotes is ERC20, ERC20Votes, ERC20Wrapper {
     constructor(IERC20 _token)
         ERC20("Governance Chiba IT University Token", "wvCHIT")
         ERC20Permit("Governance Chiba IT University Token")
