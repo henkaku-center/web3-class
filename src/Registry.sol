@@ -31,7 +31,6 @@ contract Registry is IRegistry {
     /// @dev adding a new cohort invalidates the previous one
     /// @param members Array of addresses of the members of cohort to add.
     function addCohort(address[] memory members) external onlyOwner {
-        require(msg.sender == owner, "Only the owner can add a cohort.");
         uint256 cohort = currentCohort;
         for (uint256 i = 0; i < members.length; i++) {
             whitelist[cohort][members[i]] = true;
