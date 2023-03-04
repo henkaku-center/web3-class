@@ -34,7 +34,7 @@ contract Registry is IRegistry, Ownable {
     /// @dev this call assumes that you are interested in the current cohort
     /// @param member Address of the member to check.
     /// @return True if the address is whitelisted, false otherwise.
-    function isWhitelisted(address member) external view returns (bool) {
+    function isWhitelisted(address member) public view returns (bool) {
         return _isWhitelisted(member, currentCohort);
     }
 
@@ -42,7 +42,7 @@ contract Registry is IRegistry, Ownable {
     /// @param member Address of the member to check.
     /// @param cohort Cohort to check.
     /// @return True if the address is whitelisted, false otherwise.
-    function isWhitelistedForCohort(address member, uint256 cohort) external view returns (bool) {
+    function isWhitelistedForCohort(address member, uint256 cohort) public view returns (bool) {
         return _isWhitelisted(member, cohort);
     }
 
