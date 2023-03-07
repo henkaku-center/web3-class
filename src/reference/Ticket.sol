@@ -4,12 +4,13 @@ pragma solidity ^0.8.9;
 
 import "openzeppelin-contracts/token/ERC20/IERC20.sol";
 import "openzeppelin-contracts/token/ERC721/ERC721.sol";
+import "./interfaces/ITicket.sol";
 
 error NotEnoughTokens();
 error TransferFailed();
 error InvalidOwner();
 
-contract Ticket is ERC721 {
+contract Ticket is ERC721, ITicket {
     uint256 public immutable mintPrice;
     IERC20 public immutable token;
     uint256 public nextTokenId = 0;
