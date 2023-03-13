@@ -9,25 +9,29 @@ import "./Ownable.sol";
 /// @notice This contract is used to manage the whitelist of addresses that can be used across the Chibarihill program.
 /// @author thev
 contract Registry is IRegistry, Ownable {
-    uint256 public currentCohort = 1;
+    mapping(address => bool) public whitelist;
 
-    mapping(uint256 => mapping(address => bool)) public whitelist;
+    event Whitelisted(address indexed member);
 
-    event CohortAdded(uint256 indexed cohort, address[] members);
+    constructor() {}
 
-    constructor() Ownable() {}
-
-    /// @notice This function is used to add a new cohort and add addresses to the whitelist.
-    /// @dev adding a new cohort invalidates the previous one
+    /// @notice This function is used to bulk add addresses to the whitelist.
     /// @param members Array of addresses of the members of cohort to add.
-    function addCohort(address[] memory members) external onlyOwner {
-        uint256 cohort = currentCohort;
+    function bulkAddToWhitelist(address[] calldata members) external onlyOwner {
         for (uint256 i = 0; i < members.length; i++) {
-            whitelist[cohort][members[i]] = true;
+            _whitelist(members[i]);
         }
-        currentCohort++;
+    }
 
-        emit CohortAdded(cohort, members);
+    /// @notice This function is used to add addresses to the whitelist.
+    /// @param member Address of the member to add.
+    function addToWhitelist(address member) external onlyOwner {
+        _whitelist(member);
+    }
+
+    function _whitelist(address member) internal {
+        whitelist[member] = true;
+        emit Whitelisted(member);
     }
 
     /// @notice This function is used to check if an address is whitelisted.
@@ -35,18 +39,6 @@ contract Registry is IRegistry, Ownable {
     /// @param member Address of the member to check.
     /// @return True if the address is whitelisted, false otherwise.
     function isWhitelisted(address member) public view returns (bool) {
-        return _isWhitelisted(member, currentCohort);
-    }
-
-    /// @notice This function is used to check if an address is whitelisted for a specific cohort.
-    /// @param member Address of the member to check.
-    /// @param cohort Cohort to check.
-    /// @return True if the address is whitelisted, false otherwise.
-    function isWhitelistedForCohort(address member, uint256 cohort) public view returns (bool) {
-        return _isWhitelisted(member, cohort);
-    }
-
-    function _isWhitelisted(address member, uint256 cohort) internal view returns (bool) {
-        return whitelist[cohort][member];
+        return whitelist[member];
     }
 }
