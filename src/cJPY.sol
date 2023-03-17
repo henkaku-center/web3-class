@@ -13,6 +13,7 @@ contract ChitToken is ERC20, ERC20Burnable, AccessControl {
     constructor() ERC20("Chiba JPY", "cJPY") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
+        _grantRole(BURNER_ROLE, msg.sender);
     }
 
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
