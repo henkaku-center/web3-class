@@ -23,11 +23,6 @@ abstract contract Whitelistable {
         _;
     }
 
-    modifier checkWhitelist(address[] memory accounts) {
-        require(_checkWhitelisted(accounts), "Whitelistable: Not all accounts are whitelisted");
-        _;
-    }
-
     function updateRegistry(IRegistry _registry) public virtual {
         _setRegistry(_registry);
     }
