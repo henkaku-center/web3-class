@@ -14,7 +14,17 @@ abstract contract Whitelistable {
     }
 
     modifier onlyWhitelisted() {
-        _checkWhitelisted();
+        _checkWhitelisted(msg.sender);
+        _;
+    }
+
+    modifier ifWhitelisted(address account) {
+        _checkWhitelisted(account);
+        _;
+    }
+
+    modifier checkWhitelist(address[] memory accounts) {
+        require(_checkWhitelisted(accounts), "Whitelistable: Not all accounts are whitelisted");
         _;
     }
 
@@ -27,7 +37,11 @@ abstract contract Whitelistable {
         emit RegistryUpdated(_registry);
     }
 
-    function _checkWhitelisted() internal view {
-        if (!registry.isWhitelisted(msg.sender)) revert MemberNotWhitelisted(msg.sender);
+    function _checkWhitelisted(address account) internal view {
+        if (!registry.isWhitelisted(account)) revert MemberNotWhitelisted(msg.sender);
+    }
+
+    function _checkWhitelisted(address[] memory accounts) internal view returns (bool) {
+        return registry.areWhitelisted(accounts);
     }
 }
