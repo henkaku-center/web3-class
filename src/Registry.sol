@@ -41,4 +41,14 @@ contract Registry is IRegistry, Ownable {
     function isWhitelisted(address member) public view returns (bool) {
         return whitelist[member];
     }
+
+    /// @notice This function is used to check if an array of addresses are whitelisted.
+    /// @param members Array of addresses of the members to check.
+    /// @return True if all addresses are whitelisted, false otherwise.
+    function areWhitelisted(address[] calldata members) external view returns (bool) {
+        for (uint256 i = 0; i < members.length; ++i) {
+            if (!isWhitelisted(members[i])) return false;
+        }
+        return true;
+    }
 }
