@@ -8,11 +8,11 @@ import "openzeppelin-contracts/access/AccessControl.sol";
 
 import "./Whitelistable.sol";
 
-contract ChitToken is ERC20, ERC20Burnable, AccessControl, Whitelistable {
+contract cJPYToken is ERC20, ERC20Burnable, AccessControl, Whitelistable {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant BURNER_ROLE = keccak256("BURNER_ROLE");
 
-    constructor(IRegistry registry) ERC20("Chiba JPY", "cJPY") Whitelistable(registry) {
+    constructor(IRegistry registry) ERC20("Chiba IT JPY", "cJPY") Whitelistable(registry) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(BURNER_ROLE, msg.sender);
